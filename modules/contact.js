@@ -2,11 +2,11 @@
 
 let auth = require("./slack-salesforce-auth"),
     force = require("./force"),
-    CONTACT_TOKEN = process.env.SLACK_CONTACT_TOKEN;
+    ACCOUNT_TOKEN = process.env.SLACK_ACCOUNT_TOKEN;
 
 exports.execute = (req, res) => {
 
-    if (req.body.token != CONTACT_TOKEN) {
+    if (req.body.token != ACCOUNT_TOKEN) {
         console.log("Invalid token");
         res.send("Invalid token");
         return;
@@ -14,23 +14,28 @@ exports.execute = (req, res) => {
 
     let slackUserId = req.body.user_id,
         oauthObj = auth.getOAuthObject(slackUserId),
-        q = "SELECT Id, Name, Phone, MobilePhone, Email FROM Contact WHERE Name LIKE '%" + req.body.text + "%' LIMIT 5";
+        q = "SELECT Id, Name, Phone, BillingAddress, CHT_Account_SA__c, CHT_Account_TAM__c, Customer_Type__c  FROM Account WHERE Name LIKE '%" + req.body.text + "%' LIMIT 5";
 
     force.query(oauthObj, q)
         .then(data => {
-            let contacts = JSON.parse(data).records;
-            if (contacts && contacts.length>0) {
+            let accounts = JSON.parse(data).records;
+            if (accounts && accounts.length>0) {
                 let attachments = [];
-                contacts.forEach(function(contact) {
+                accounts.forEach(function(account) {
                     let fields = [];
-                    fields.push({title: "Name", value: contact.Name, short:true});
-                    fields.push({title: "Phone", value: contact.Phone, short:true});
-                    fields.push({title: "Mobile", value: contact.MobilePhone, short:true});
-                    fields.push({title: "Email", value: contact.Email, short:true});
-                    fields.push({title: "Open in Salesforce:", value: oauthObj.instance_url + "/" + contact.Id, short:false});
-                    attachments.push({color: "#A094ED", fields: fields});
+                    fields.push({title: "Name", value: account.Name, short:true});
+                    fields.push({title: "Phone", value: account.Phone, short:true});
+                    fields.push({title: "CHT Account SA", value: account.CHT_Account_SA__c short:true});
+                    fields.push({title: "CHT Account TAM", value: account.CHT_Account_TAM__c short:true});
+                    fields.push({title: "Customer Type", value: account.Customer_Type__c short:true});
+                    if (account.BillingAddress) {
+                        fields.push({title: "Address", value: account.BillingAddress.street, short:true});
+                        fields.push({title: "City", value: account.BillingAddress.city + ', ' + account.BillingAddress.state, short:true});
+                    }
+                    fields.push({title: "Open in Salesforce:", value: oauthObj.instance_url + "/" + account.Id, short:false});
+                    attachments.push({color: "#7F8DE1", fields: fields});
                 });
-                res.json({text: "Contacts matching '" + req.body.text + "':", attachments: attachments});
+                res.json({text: "Accounts matching '" + req.body.text + "':", attachments: attachments});
             } else {
                 res.send("No records");
             }
