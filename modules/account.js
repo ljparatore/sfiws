@@ -14,7 +14,7 @@ exports.execute = (req, res) => {
 
     let slackUserId = req.body.user_id,
         oauthObj = auth.getOAuthObject(slackUserId),
-        q = "SELECT Id, Name, Phone, BillingAddress FROM Account WHERE Name LIKE '%" + req.body.text + "%' LIMIT 5";
+        q = "SELECT Id, Name, Phone, BillingAddress, CHT_Account_SA__c, CHT_Account_TAM__c, Customer_Type__c FROM Account WHERE Name LIKE '%" + req.body.text + "%' LIMIT 5";
 
     force.query(oauthObj, q)
         .then(data => {
@@ -25,6 +25,9 @@ exports.execute = (req, res) => {
                     let fields = [];
                     fields.push({title: "Name", value: account.Name, short:true});
                     fields.push({title: "Phone", value: account.Phone, short:true});
+                    fields.push({title: "CHT Account SA", value: account.CHT_Account_SA__c short:true});
+                    fields.push({title: "CHT Account TAM", value: account.CHT_Account_TAM__c short:true});
+                    fields.push({title: "Customer Type", value: account.Customer_Type__c short:true});
                     if (account.BillingAddress) {
                         fields.push({title: "Address", value: account.BillingAddress.street, short:true});
                         fields.push({title: "City", value: account.BillingAddress.city + ', ' + account.BillingAddress.state, short:true});
