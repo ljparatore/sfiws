@@ -25,9 +25,9 @@ exports.execute = (req, res) => {
                     let fields = [];
                     fields.push({title: "Name", value: account.Name, short:true});
                     fields.push({title: "Phone", value: account.Phone, short:true});
-                    fields.push({title: "CHT Account SA", value: account.CHT_Account_SA__c short:true});
-                    fields.push({title: "CHT Account TAM", value: account.CHT_Account_TAM__c short:true});
-                    fields.push({title: "Customer Type", value: account.Customer_Type__c short:true});
+                    fields.push({title: "CHT Account SA", value: account.CHT_Account_SA__c, short:true});
+                    fields.push({title: "CHT Account TAM", value: account.CHT_Account_TAM__c, short:true});
+                    fields.push({title: "Customer Type", value: account.Customer_Type__c, short:true});
                     if (account.BillingAddress) {
                         fields.push({title: "Address", value: account.BillingAddress.street, short:true});
                         fields.push({title: "City", value: account.BillingAddress.city + ', ' + account.BillingAddress.state, short:true});
