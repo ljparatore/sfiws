@@ -8,8 +8,8 @@ let express = require('express'),
     opportunity = require('./modules/opportunity'),
     _case = require('./modules/case'),
     whoami = require('./modules/whoami'),
-    account_SA = required('./modules/account_sa'),
-    account_TAM = required('./modules/account_tam'),
+    account_SA = require('./modules/account_sa'),
+    account_TAM = require('./modules/account_tam'),
     app = express();
 
 
