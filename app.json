@@ -27,6 +27,16 @@
         "value":"",
         "required":false
     },
+    "SLACK_SA_TOKEN": {
+        "description": "Slack token for the SA account slash command",
+        "value":"",
+        "required":false
+    },
+    "SLACK_TAM_TOKEN": {
+        "description": "Slack token for the TAM account slash command",
+        "value":"",
+        "required":false
+    },
     "SLACK_CONTACT_TOKEN": {
       "description": "Slack token for the contact slash command",
       "value":"",
