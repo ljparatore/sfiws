@@ -8,6 +8,8 @@ let express = require('express'),
     opportunity = require('./modules/opportunity'),
     _case = require('./modules/case'),
     whoami = require('./modules/whoami'),
+    account_SA = required('./modules/account_sa'),
+    account_TAM = required('./modules/account_tam'),
     app = express();
 
 
@@ -22,6 +24,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.post('/pipeline', opportunity.execute);
 app.post('/contact', contact.execute);
 app.post('/account', account.execute);
+app.post('/account_SA', account_SA.execute);
+app.post('/account_TAM', account_TAM.execute);
 app.post('/case', _case.execute);
 app.post('/whoami', whoami.execute);
 app.post('/login', auth.loginLink);
