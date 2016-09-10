@@ -1,9 +1,9 @@
 "use strict";
 
-var SLACK_LOGIN_TOKEN = process.env.SLACK_LOGIN_TOKEN,
-    SF_CLIENT_ID = process.env.SF_CLIENT_ID,
-    SF_CLIENT_SECRET = process.env.SF_CLIENT_SECRET,
-    SF_LOGIN_URL = process.env.SF_LOGIN_URL,
+var SLACK_LOGIN_TOKEN = U1Z8620SJ,
+    SF_CLIENT_ID = 3MVG9rFJvQRVOvk4InbvkjjEhAosZP.M9xsh1Qe.kAL_nEUy3w0Bqsm8AZigjuyEil1i8xMUVFirp_fbjD4u7,
+    SF_CLIENT_SECRET = 4172215634534919476,
+    SF_LOGIN_URL = login.salesforce.com,
     request = require('request'),
     mappings = {};
 
